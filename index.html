@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dezzert Dudess | Digital Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --emerald-dark: #022c1e;
+            --emerald-light: #053d2d;
+            --gold-metallic: #d4af37;
+            --gold-bright: #f9e29c;
+            --text-white: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-gold: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at top, var(--emerald-light), var(--emerald-dark));
+            background-attachment: fixed;
+            color: var(--text-white);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* --- STICKY HEADER --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(2, 44, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: var(--border-gold);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--gold-bright);
+            letter-spacing: 1px;
+            margin-bottom: 0.2rem;
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold-metallic);
+            margin-bottom: 1rem;
+        }
+
+        /* --- CONTROLS --- */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #searchBar {
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            border: var(--border-gold);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            font-size: 14px;
+        }
+
+        #searchBar::placeholder { color: rgba(255,255,255,0.5); }
+
+        #categoryFilter {
+            width: 100%;
+            padding: 10px;
+            border-radius: 25px;
+            border: var(--border-gold);
+            background: var(--emerald-dark);
+            color: var(--gold-bright);
+            font-weight: 600;
+        }
+
+        /* --- MENU LAYOUT --- */
+        .container {
+            padding: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-bright);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--gold-metallic), transparent);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        /* --- ITEM CARDS --- */
+        .item-card {
+            background: var(--card-bg);
+            border: var(--border-gold);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .item-card:active {
+            transform: scale(0.98);
+            border-color: var(--gold-bright);
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .item-subcat {
+            font-size: 0.7rem;
+            color: var(--gold-metallic);
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .item-price {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-bright);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--gold-metallic);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden { display: none !important; }
+
+        /* Smooth scroll for category clicking */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Dezzert Dudess</div>
+        <div class="subtitle">Digital Menu</div>
+        <div class="controls">
+            <input type="text" id="searchBar" placeholder="Search for chocolate, waffles, coffee..." onkeyup="filterMenu()">
+            <select id="categoryFilter" onchange="filterCategory()">
+                <option value="all">All Categories</option>
+                <option value="Thickshake">Thickshakes</option>
+                <option value="Hot Chocolates">Hot Chocolates</option>
+                <option value="Hot Brownies">Hot Brownies</option>
+                <option value="Cold Coffees">Cold Coffees</option>
+                <option value="Waffles">Waffles</option>
+                <option value="Pancakes">Pancakes</option>
+                <option value="Icecreams">Icecreams</option>
+                <option value="Toppings">Toppings</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="container" id="menuContainer">
+        </main>
+
+    <footer>
+        <p>✦ ✦ ✦</p>
+        <p>Prices in ₹. Subject to availability.</p>
+        <p>&copy; 2024 Dezzert Dudess Luxury Café</p>
+    </footer>
+
+    <script>
+        const menuData = [
+            // THICKSHAKES (Sorted by sub-categories as per image)
+            { name: "Vanilla Choco", price: 70, cat: "Thickshake", sub: "Regular" },
+            { name: "Choco Gems", price: 70, cat: "Thickshake", sub: "Regular" },
+            { name: "Choco Chips", price: 90, cat: "Thickshake", sub: "Regular" },
+            { name: "Chocopie", price: 90, cat: "Thickshake", sub: "Regular" },
+            
+            { name: "Nutties Rocher", price: 150, cat: "Thickshake", sub: "Ferrero Rocher" },
+            { name: "Ferrero Devil Crunch", price: 150, cat: "Thickshake", sub: "Ferrero Rocher" },
+            { name: "Nutella X Rocher", price: 160, cat: "Thickshake", sub: "Ferrero Rocher" },
+            { name: "Rocher Rocher", price: 180, cat: "Thickshake", sub: "Ferrero Rocher" },
+
+            { name: "Brownville Brownie", price: 140, cat: "Thickshake", sub: "Dark" },
+            { name: "Royal Dark Chocolate", price: 140, cat: "Thickshake", sub: "Dark" },
+            { name: "Cocoa Cranberry", price: 160, cat: "Thickshake", sub: "Dark" },
+            { name: "Cocoa Brownie Ferrero", price: 180, cat: "Thickshake", sub: "Dark" },
+
+            { name: "Mango", price: 100, cat: "Thickshake", sub: "Natural" },
+            { name: "Strawberry", price: 100, cat: "Thickshake", sub: "Natural" },
+            { name: "Sitafal", price: 110, cat: "Thickshake", sub: "Natural" },
+            { name: "Wild Blueberry", price: 130, cat: "Thickshake", sub: "Natural" },
+            { name: "Coconut", price: 140, cat: "Thickshake", sub: "Natural" },
+
+            { name: "Nutella", price: 150, cat: "Thickshake", sub: "Nutella" },
+            { name: "Nutella Brownie", price: 130, cat: "Thickshake", sub: "Nutella" },
+            { name: "Nutella Overdose Nutty", price: 170, cat: "Thickshake", sub: "Nutella" },
+
+            { name: "Red Velvet Blast", price: 120, cat: "Thickshake", sub: "Hatke" },
+            { name: "La Carmello", price: 150, cat: "Thickshake", sub: "Hatke" },
+            { name: "Lotus Biscoff", price: 150, cat: "Thickshake", sub: "Hatke" },
+            { name: "Royal Baklawa", price: 200, cat: "Thickshake", sub: "Hatke" },
+
+            // HOT CHOCOLATES
+            { name: "Hot Chocolate", price: 100, cat: "Hot Chocolates", sub: "Classic" },
+            { name: "Hazelnut Hot Chocolate", price: 120, cat: "Hot Chocolates", sub: "Premium" },
+            { name: "Dark Hot Chocolate", price: 140, cat: "Hot Chocolates", sub: "Premium" },
+
+            // COLD COFFEE
+            { name: "Creamy Cold Coffee", price: 100, cat: "Cold Coffees", sub: "Classic" },
+            { name: "Java Chips Coffee", price: 120, cat: "Cold Coffees", sub: "Signature" },
+            { name: "Roasted Hazelnut", price: 130, cat: "Cold Coffees", sub: "Signature" },
+
+            // WAFFLES
+            { name: "White Truffle Waffle", price: 120, cat: "Waffles", sub: "Classic" },
+            { name: "Triple Chocolate Waffle", price: 130, cat: "Waffles", sub: "Overload" },
+            { name: "Biscoff Nutella Waffle", price: 180, cat: "Waffles", sub: "Jawbreaker" },
+
+            // PANCAKES
+            { name: "Belgian Milk", price: 120, cat: "Pancakes", sub: "Classic" },
+            { name: "Biscoff Pancakes", price: 150, cat: "Pancakes", sub: "Deluxe" },
+
+            // TOPPINGS
+            { name: "Vanilla Ice Cream", price: 40, cat: "Toppings", sub: "Add-on" },
+            { name: "Rocher", price: 50, cat: "Toppings", sub: "Add-on" }
+        ];
+
+        const container = document.getElementById('menuContainer');
+
+        function renderMenu(data) {
+            container.innerHTML = '';
+            const categories = [...new Set(data.map(item => item.cat))];
+
+            categories.forEach(cat => {
+                const section = document.createElement('section');
+                section.innerHTML = `<h2 class="section-title">${cat}</h2>`;
+                
+                const grid = document.createElement('div');
+                grid.className = 'menu-grid';
+
+                const items = data.filter(i => i.cat === cat);
+                items.forEach(item => {
+                    grid.innerHTML += `
+                        <div class="item-card" data-name="${item.name.toLowerCase()}">
+                            <div class="item-info">
+                                <span class="item-name">${item.name}</span>
+                                <span class="item-subcat">${item.sub}</span>
+                            </div>
+                            <div class="item-price">₹${item.price}</div>
+                        </div>
+                    `;
+                });
+                
+                section.appendChild(grid);
+                container.appendChild(section);
+            });
+        }
+
+        function filterMenu() {
+            const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+            const filtered = menuData.filter(item => 
+                item.name.toLowerCase().includes(searchTerm) || 
+                item.cat.toLowerCase().includes(searchTerm)
+            );
+            renderMenu(filtered);
+        }
+
+        function filterCategory() {
+            const val = document.getElementById('categoryFilter').value;
+            if(val === 'all') {
+                renderMenu(menuData);
+            } else {
+                const filtered = menuData.filter(item => item.cat === val);
+                renderMenu(filtered);
+            }
+        }
+
+        // Initial Load
+        renderMenu(menuData);
+    </script>
+</body>
+</html>
