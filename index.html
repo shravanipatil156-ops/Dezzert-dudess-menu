@@ -3,326 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dezzert Dudess | Digital Menu</title>
+    <title>Dezzert Dudess | Luxury Digital Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --emerald-dark: #022c1e;
-            --emerald-light: #053d2d;
-            --gold-metallic: #d4af37;
-            --gold-bright: #f9e29c;
-            --text-white: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --border-gold: 1px solid rgba(212, 175, 55, 0.3);
+            --emerald-deep: #01241a;
+            --emerald-glow: #054d35;
+            --gold: #d4af37;
+            --gold-light: #f9e29c;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.06);
+            --border-gold: 1px solid rgba(212, 175, 55, 0.4);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background: radial-gradient(circle at top, var(--emerald-light), var(--emerald-dark));
+            background: radial-gradient(circle at top, var(--emerald-glow), var(--emerald-deep));
+            background-color: var(--emerald-deep);
             background-attachment: fixed;
-            color: var(--text-white);
+            color: var(--white);
             font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* --- STICKY HEADER --- */
         header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(2, 44, 30, 0.95);
-            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(1, 36, 26, 0.96);
+            backdrop-filter: blur(15px);
             border-bottom: var(--border-gold);
-            padding: 1rem;
+            padding: 1.2rem 1rem;
             text-align: center;
         }
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--gold-bright);
-            letter-spacing: 1px;
-            margin-bottom: 0.2rem;
+            font-size: 2rem; font-style: italic;
+            color: var(--gold-light);
+            text-shadow: 0 0 10px rgba(249, 226, 156, 0.3);
+            margin-bottom: 12px;
         }
 
-        .subtitle {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--gold-metallic);
-            margin-bottom: 1rem;
+        .search-container {
+            max-width: 500px; margin: 0 auto;
+            display: flex; flex-direction: column; gap: 10px;
         }
 
-        /* --- CONTROLS --- */
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 500px;
-            margin: 0 auto;
+        input, select {
+            width: 100%; padding: 12px 20px; border-radius: 30px;
+            border: var(--border-gold); background: rgba(255, 255, 255, 0.1);
+            color: white; outline: none; font-size: 14px;
         }
 
-        #searchBar {
-            width: 100%;
-            padding: 12px;
-            border-radius: 25px;
-            border: var(--border-gold);
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            outline: none;
-            font-size: 14px;
-        }
+        .container { max-width: 600px; margin: 0 auto; padding: 1.5rem; }
 
-        #searchBar::placeholder { color: rgba(255,255,255,0.5); }
-
-        #categoryFilter {
-            width: 100%;
-            padding: 10px;
-            border-radius: 25px;
-            border: var(--border-gold);
-            background: var(--emerald-dark);
-            color: var(--gold-bright);
-            font-weight: 600;
-        }
-
-        /* --- MENU LAYOUT --- */
-        .container {
-            padding: 1rem;
-            max-width: 600px;
-            margin: 0 auto;
-            min-height: 100vh;
-        }
-
-        .section-title {
+        .category-header {
             font-family: 'Playfair Display', serif;
-            color: var(--gold-bright);
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.6rem; color: var(--gold-light);
+            margin: 2.5rem 0 1.2rem; border-bottom: 1px solid var(--gold);
+            padding-bottom: 8px; display: block;
         }
 
-        .section-title::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, var(--gold-metallic), transparent);
-        }
+        .menu-grid { display: grid; gap: 12px; }
 
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        /* --- ITEM CARDS --- */
         .item-card {
-            background: var(--card-bg);
+            background: var(--glass);
             border: var(--border-gold);
-            border-radius: 15px;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-            animation: fadeIn 0.5s ease forwards;
+            border-radius: 12px; padding: 18px;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: 0.3s;
+        }
+        .item-card:active { transform: scale(0.97); background: rgba(212, 175, 55, 0.15); }
+
+        .item-details { display: flex; flex-direction: column; gap: 4px; }
+        .item-name { font-weight: 600; font-size: 1.05rem; }
+        .tap-hint { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
+        .item-price { font-family: 'Playfair Display', serif; font-weight: bold; font-size: 1.2rem; color: var(--gold-light); }
+
+        #imageModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 2000;
+            display: none; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content {
+            max-width: 450px; width: 100%; background: var(--emerald-deep);
+            border: 2px solid var(--gold); border-radius: 20px; overflow: hidden;
+            position: relative; animation: zoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .modal-content img { width: 100%; height: 350px; object-fit: cover; border-bottom: 2px solid var(--gold); }
+        .modal-info { padding: 25px; text-align: center; }
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; font-size: 2.5rem;
+            color: var(--gold-light); cursor: pointer; z-index: 10;
         }
 
-        .item-card:active {
-            transform: scale(0.98);
-            border-color: var(--gold-bright);
-        }
+        @keyframes zoomIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .item-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .item-name {
-            font-weight: 600;
-            font-size: 1.05rem;
-        }
-
-        .item-subcat {
-            font-size: 0.7rem;
-            color: var(--gold-metallic);
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-top: 2px;
-        }
-
-        .item-price {
-            font-family: 'Playfair Display', serif;
-            color: var(--gold-bright);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        /* --- FOOTER --- */
         footer {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--gold-metallic);
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            text-align: center; padding: 4rem 1rem; color: var(--gold);
+            font-size: 0.8rem; border-top: var(--border-gold); margin-top: 3rem; opacity: 0.8;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hidden { display: none !important; }
-
-        /* Smooth scroll for category clicking */
-        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo">Dezzert Dudess</div>
-        <div class="subtitle">Digital Menu</div>
-        <div class="controls">
-            <input type="text" id="searchBar" placeholder="Search for chocolate, waffles, coffee..." onkeyup="filterMenu()">
-            <select id="categoryFilter" onchange="filterCategory()">
-                <option value="all">All Categories</option>
-                <option value="Thickshake">Thickshakes</option>
-                <option value="Hot Chocolates">Hot Chocolates</option>
-                <option value="Hot Brownies">Hot Brownies</option>
-                <option value="Cold Coffees">Cold Coffees</option>
-                <option value="Waffles">Waffles</option>
-                <option value="Pancakes">Pancakes</option>
-                <option value="Icecreams">Icecreams</option>
-                <option value="Toppings">Toppings</option>
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Search menu..." onkeyup="filterMenu()">
+            <select id="catFilter" onchange="filterMenu()">
+                <option value="all">View All Categories</option>
             </select>
         </div>
     </header>
 
-    <main class="container" id="menuContainer">
-        </main>
+    <main class="container" id="menuMain"></main>
+
+    <div id="imageModal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <img id="modalImg" src="" alt="Dessert Item">
+            <div class="modal-info">
+                <h2 id="modalName" style="color: var(--gold-light); font-family: 'Playfair Display'; margin-bottom: 8px;"></h2>
+                <div id="modalPrice" style="font-size: 1.3rem; color: white; font-weight: 600;"></div>
+            </div>
+        </div>
+    </div>
 
     <footer>
-        <p>✦ ✦ ✦</p>
-        <p>Prices in ₹. Subject to availability.</p>
-        <p>&copy; 2024 Dezzert Dudess Luxury Café</p>
+        <p>✧ EXQUISITE DESSERT EXPERIENCE ✧</p>
+        <p style="margin: 10px 0;">Prices in ₹. Subject to availability.</p>
+        <p>&copy; 2024 Dezzert Dudess</p>
     </footer>
 
     <script>
         const menuData = [
-            // THICKSHAKES (Sorted by sub-categories as per image)
-            { name: "Vanilla Choco", price: 70, cat: "Thickshake", sub: "Regular" },
-            { name: "Choco Gems", price: 70, cat: "Thickshake", sub: "Regular" },
-            { name: "Choco Chips", price: 90, cat: "Thickshake", sub: "Regular" },
-            { name: "Chocopie", price: 90, cat: "Thickshake", sub: "Regular" },
-            
-            { name: "Nutties Rocher", price: 150, cat: "Thickshake", sub: "Ferrero Rocher" },
-            { name: "Ferrero Devil Crunch", price: 150, cat: "Thickshake", sub: "Ferrero Rocher" },
-            { name: "Nutella X Rocher", price: 160, cat: "Thickshake", sub: "Ferrero Rocher" },
-            { name: "Rocher Rocher", price: 180, cat: "Thickshake", sub: "Ferrero Rocher" },
+            // --- THICKSHAKES ---
+            { name: "Choco Gems", price: 70, cat: "Regular Thickshakes", img: "" },
+            { name: "Vanilla Choco", price: 70, cat: "Regular Thickshakes", img: "" },
+            { name: "Choco Chips", price: 90, cat: "Regular Thickshakes", img: "" },
+            { name: "Chocopie", price: 90, cat: "Regular Thickshakes", img: "" },
 
-            { name: "Brownville Brownie", price: 140, cat: "Thickshake", sub: "Dark" },
-            { name: "Royal Dark Chocolate", price: 140, cat: "Thickshake", sub: "Dark" },
-            { name: "Cocoa Cranberry", price: 160, cat: "Thickshake", sub: "Dark" },
-            { name: "Cocoa Brownie Ferrero", price: 180, cat: "Thickshake", sub: "Dark" },
+            { name: "Nutties Rocher", price: 150, cat: "Ferrero Rocher Thickshake", img: "" },
+            { name: "Ferrero Devil Crunch", price: 150, cat: "Ferrero Rocher Thickshake", img: "" },
+            { name: "Nutella X Rocher", price: 160, cat: "Ferrero Rocher Thickshake", img: "" },
+            { name: "Rocher Rocher", price: 180, cat: "Ferrero Rocher Thickshake", img: "" },
 
-            { name: "Mango", price: 100, cat: "Thickshake", sub: "Natural" },
-            { name: "Strawberry", price: 100, cat: "Thickshake", sub: "Natural" },
-            { name: "Sitafal", price: 110, cat: "Thickshake", sub: "Natural" },
-            { name: "Wild Blueberry", price: 130, cat: "Thickshake", sub: "Natural" },
-            { name: "Coconut", price: 140, cat: "Thickshake", sub: "Natural" },
+            { name: "Brownville Brownie", price: 140, cat: "Dark Thickshakes", img: "" },
+            { name: "Royal Dark Chocolate", price: 140, cat: "Dark Thickshakes", img: "" },
+            { name: "Cocoa Cranberry", price: 160, cat: "Dark Thickshakes", img: "" },
+            { name: "Cocoa Brownie Ferrero", price: 180, cat: "Dark Thickshakes", img: "" },
 
-            { name: "Nutella", price: 150, cat: "Thickshake", sub: "Nutella" },
-            { name: "Nutella Brownie", price: 130, cat: "Thickshake", sub: "Nutella" },
-            { name: "Nutella Overdose Nutty", price: 170, cat: "Thickshake", sub: "Nutella" },
+            { name: "Oreo", price: 100, cat: "Chocolate Thickshakes", img: "" },
+            { name: "Kit Kat", price: 100, cat: "Chocolate Thickshakes", img: "" },
+            { name: "Swiss Chocolate", price: 110, cat: "Chocolate Thickshakes", img: "" },
+            { name: "Cadbury Crackle", price: 130, cat: "Chocolate Thickshakes", img: "" },
+            { name: "Silk Hazelnut", price: 130, cat: "Chocolate Thickshakes", img: "" },
+            { name: "Choco Lava", price: 140, cat: "Chocolate Thickshakes", img: "" },
 
-            { name: "Red Velvet Blast", price: 120, cat: "Thickshake", sub: "Hatke" },
-            { name: "La Carmello", price: 150, cat: "Thickshake", sub: "Hatke" },
-            { name: "Lotus Biscoff", price: 150, cat: "Thickshake", sub: "Hatke" },
-            { name: "Royal Baklawa", price: 200, cat: "Thickshake", sub: "Hatke" },
+            { name: "Mango", price: 100, cat: "Natural Thickshakes", img: "" },
+            { name: "Strawberry", price: 100, cat: "Natural Thickshakes", img: "" },
+            { name: "Pineapple", price: 110, cat: "Natural Thickshakes", img: "" },
+            { name: "Sitafal", price: 110, cat: "Natural Thickshakes", img: "" },
+            { name: "Wild Blueberry", price: 140, cat: "Natural Thickshakes", img: "" },
+            { name: "Coconut", price: 140, cat: "Natural Thickshakes", img: "" },
 
-            // HOT CHOCOLATES
-            { name: "Hot Chocolate", price: 100, cat: "Hot Chocolates", sub: "Classic" },
-            { name: "Hazelnut Hot Chocolate", price: 120, cat: "Hot Chocolates", sub: "Premium" },
-            { name: "Dark Hot Chocolate", price: 140, cat: "Hot Chocolates", sub: "Premium" },
+            { name: "Nutella", price: 120, cat: "Nutella Thickshake", img: "" },
+            { name: "Nutella Brownie", price: 130, cat: "Nutella Thickshake", img: "" },
+            { name: "Hazelnut Nutella", price: 140, cat: "Nutella Thickshake", img: "" },
+            { name: "Nutella Crunch", price: 150, cat: "Nutella Thickshake", img: "" },
+            { name: "Nutella Overdose Nutty", price: 170, cat: "Nutella Thickshake", img: "" },
+            { name: "Nutella Tiramisu", price: 180, cat: "Nutella Thickshake", img: "" },
 
-            // COLD COFFEE
-            { name: "Creamy Cold Coffee", price: 100, cat: "Cold Coffees", sub: "Classic" },
-            { name: "Java Chips Coffee", price: 120, cat: "Cold Coffees", sub: "Signature" },
-            { name: "Roasted Hazelnut", price: 130, cat: "Cold Coffees", sub: "Signature" },
+            { name: "Chocolate Brownie", price: 110, cat: "Brownie Thickshakes", img: "" },
+            { name: "Mocha Brownie", price: 110, cat: "Brownie Thickshakes", img: "" },
+            { name: "Nutella Brownie (Ex)", price: 140, cat: "Brownie Thickshakes", img: "" },
+            { name: "Kitkat Brownie", price: 140, cat: "Brownie Thickshakes", img: "" },
+            { name: "Brewing Brownie", price: 140, cat: "Brownie Thickshakes", img: "" },
+            { name: "Brownie Devil Crunch", price: 150, cat: "Brownie Thickshakes", img: "" },
+            { name: "Brownie Rocher", price: 150, cat: "Brownie Thickshakes", img: "" },
 
-            // WAFFLES
-            { name: "White Truffle Waffle", price: 120, cat: "Waffles", sub: "Classic" },
-            { name: "Triple Chocolate Waffle", price: 130, cat: "Waffles", sub: "Overload" },
-            { name: "Biscoff Nutella Waffle", price: 180, cat: "Waffles", sub: "Jawbreaker" },
+            { name: "Kesar Badam", price: 100, cat: "Dry Fruit Thickshakes", img: "" },
+            { name: "Belgain Cashewnut", price: 100, cat: "Dry Fruit Thickshakes", img: "" },
+            { name: "Kaju Rose", price: 150, cat: "Dry Fruit Thickshakes", img: "" },
+            { name: "Royal Nuts Heaven", price: 150, cat: "Dry Fruit Thickshakes", img: "" },
+            { name: "Dubai Pistachios", price: 150, cat: "Dry Fruit Thickshakes", img: "" },
 
-            // PANCAKES
-            { name: "Belgian Milk", price: 120, cat: "Pancakes", sub: "Classic" },
-            { name: "Biscoff Pancakes", price: 150, cat: "Pancakes", sub: "Deluxe" },
+            { name: "Red Velvet Blast", price: 120, cat: "Hatke Shake", img: "" },
+            { name: "La Caramello", price: 150, cat: "Hatke Shake", img: "" },
+            { name: "Lotus Biscoff", price: 150, cat: "Hatke Shake", img: "" },
+            { name: "Choco Bar", price: 150, cat: "Hatke Shake", img: "" },
+            { name: "Caramel Popcorn", price: 170, cat: "Hatke Shake", img: "" },
+            { name: "Crunchy Cookies", price: 170, cat: "Hatke Shake", img: "" },
+            { name: "Nutella Cookies", price: 180, cat: "Hatke Shake", img: "" },
+            { name: "Royal Baklawa", price: 200, cat: "Hatke Shake", img: "" },
 
-            // TOPPINGS
-            { name: "Vanilla Ice Cream", price: 40, cat: "Toppings", sub: "Add-on" },
-            { name: "Rocher", price: 50, cat: "Toppings", sub: "Add-on" }
+            // --- HOT CHOCOLATES ---
+            { name: "Hot Chocolate", price: 100, cat: "Hot Chocolates", img: "" },
+            { name: "Coffee Hot Chocolate", price: 110, cat: "Hot Chocolates", img: "" },
+            { name: "Hazelnut Hot Chocolate", price: 120, cat: "Hot Chocolates", img: "" },
+            { name: "Brownie Hot Chocolate", price: 120, cat: "Hot Chocolates", img: "" },
+            { name: "Hot Salted Caramel", price: 140, cat: "Hot Chocolates", img: "" },
+            { name: "Dark Hot Chocolate", price: 140, cat: "Hot Chocolates", img: "" },
+
+            // --- HOT BROWNIES ---
+            { name: "Brownie Fudge", price: 90, cat: "Hot Brownies", img: "" },
+            { name: "Kit Kat Brownie", price: 120, cat: "Hot Brownies", img: "" },
+            { name: "Hot Sizzling Brownie", price: 120, cat: "Hot Brownies", img: "" },
+            { name: "Hazelnut Brownie", price: 130, cat: "Hot Brownies", img: "" },
+            { name: "Belgium Brownie", price: 130, cat: "Hot Brownies", img: "" },
+            { name: "Choco Lava Bomb", price: 150, cat: "Hot Brownies", img: "" },
+            { name: "Roasted Almond Brownie", price: 150, cat: "Hot Brownies", img: "" },
+
+            // --- COLD COFFEES ---
+            { name: "Creamy Cold Coffee", price: 100, cat: "Cold Coffees", img: "" },
+            { name: "Mocha Coffee Choco", price: 110, cat: "Cold Coffees", img: "" },
+            { name: "Java Chips", price: 120, cat: "Cold Coffees", img: "" },
+            { name: "Roasted Hazelnut", price: 130, cat: "Cold Coffees", img: "" },
+            { name: "French Vanilla", price: 130, cat: "Cold Coffees", img: "" },
+            { name: "Choco Frappe", price: 130, cat: "Cold Coffees", img: "" },
+
+            // --- WAFFLES ---
+            { name: "White Truffle", price: 120, cat: "Waffles", img: "" },
+            { name: "Dark Knight", price: 120, cat: "Waffles", img: "" },
+            { name: "Chocolate Overload", price: 130, cat: "Waffles", img: "" },
+            { name: "Triple Chocolate", price: 130, cat: "Waffles", img: "" },
+            { name: "Dark & White Fancy", price: 130, cat: "Waffles", img: "" },
+            { name: "Oreo Crunch", price: 130, cat: "Waffles", img: "" },
+            { name: "Kit Kat Break", price: 130, cat: "Waffles", img: "" },
+            { name: "Swiss Choco", price: 130, cat: "Waffles", img: "" },
+            { name: "Choco Mocha", price: 130, cat: "Waffles", img: "" },
+            { name: "Butterscotch Crunch", price: 140, cat: "Waffles", img: "" },
+            { name: "Almond Brownie Waffle", price: 140, cat: "Waffles", img: "" },
+            { name: "Pista", price: 150, cat: "Waffles", img: "" },
+            { name: "Crackling Nutella", price: 150, cat: "Waffles", img: "" },
+            { name: "Hazelnut", price: 150, cat: "Waffles", img: "" },
+            { name: "Brownie Kitkat", price: 150, cat: "Waffles", img: "" },
+
+            // --- JAWBREAKERS ---
+            { name: "Double Chocolate", price: 170, cat: "Jawbreaker Waffles", img: "" },
+            { name: "Oreo Mocha", price: 170, cat: "Jawbreaker Waffles", img: "" },
+            { name: "Biscoff Nutella", price: 180, cat: "Jawbreaker Waffles", img: "" },
+            { name: "Kitkat Oreo Brownie", price: 180, cat: "Jawbreaker Waffles", img: "" },
+
+            // --- PANCAKES ---
+            { name: "Belgian Milk", price: 120, cat: "Pancakes", img: "" },
+            { name: "Milkyway White", price: 120, cat: "Pancakes", img: "" },
+            { name: "Belgian Dark", price: 120, cat: "Pancakes", img: "" },
+            { name: "Biscoff", price: 150, cat: "Pancakes", img: "" },
+            { name: "Tiramisu", price: 160, cat: "Pancakes", img: "" },
+            { name: "Hazelnut Almond", price: 160, cat: "Pancakes", img: "" },
+
+            // --- ICE CREAMS (SEPARATED) ---
+            { name: "Vanilla Icecream", price: 70, cat: "Icecreams", img: "" },
+            { name: "Butterscotch Icecream", price: 80, cat: "Icecreams", img: "" },
+            { name: "Choco Chips Icecream", price: 80, cat: "Icecreams", img: "" },
+
+            // --- TOPPINGS (SEPARATED) ---
+            { name: "Vanilla Ice cream (Add-on)", price: 40, cat: "Toppings", img: "" },
+            { name: "Brownie (Add-on)", price: 40, cat: "Toppings", img: "" },
+            { name: "Gems", price: 40, cat: "Toppings", img: "" },
+            { name: "Almond", price: 40, cat: "Toppings", img: "" },
+            { name: "Rocher", price: 50, cat: "Toppings", img: "" }
         ];
 
-        const container = document.getElementById('menuContainer');
+        const menuMain = document.getElementById('menuMain');
+        const catFilter = document.getElementById('catFilter');
 
-        function renderMenu(data) {
-            container.innerHTML = '';
-            const categories = [...new Set(data.map(item => item.cat))];
+        const uniqueCats = [...new Set(menuData.map(i => i.cat))];
+        uniqueCats.forEach(cat => {
+            const opt = document.createElement('option');
+            opt.value = cat;
+            opt.innerText = cat;
+            catFilter.appendChild(opt);
+        });
 
-            categories.forEach(cat => {
+        function renderMenu(items) {
+            menuMain.innerHTML = '';
+            const grouped = items.reduce((acc, obj) => {
+                const key = obj.cat;
+                if (!acc[key]) acc[key] = [];
+                acc[key].push(obj);
+                return acc;
+            }, {});
+
+            for (const category in grouped) {
                 const section = document.createElement('section');
-                section.innerHTML = `<h2 class="section-title">${cat}</h2>`;
-                
+                section.innerHTML = `<h2 class="category-header">${category}</h2>`;
                 const grid = document.createElement('div');
                 grid.className = 'menu-grid';
 
-                const items = data.filter(i => i.cat === cat);
-                items.forEach(item => {
+                grouped[category].forEach(item => {
                     grid.innerHTML += `
-                        <div class="item-card" data-name="${item.name.toLowerCase()}">
-                            <div class="item-info">
+                        <div class="item-card" onclick="openModal('${item.name.replace(/'/g, "\\'")}', '${item.price}', '${item.img}')">
+                            <div class="item-details">
                                 <span class="item-name">${item.name}</span>
-                                <span class="item-subcat">${item.sub}</span>
+                                <span class="tap-hint">View Photo</span>
                             </div>
                             <div class="item-price">₹${item.price}</div>
                         </div>
                     `;
                 });
-                
                 section.appendChild(grid);
-                container.appendChild(section);
-            });
+                menuMain.appendChild(section);
+            }
         }
 
         function filterMenu() {
-            const searchTerm = document.getElementById('searchBar').value.toLowerCase();
-            const filtered = menuData.filter(item => 
-                item.name.toLowerCase().includes(searchTerm) || 
-                item.cat.toLowerCase().includes(searchTerm)
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const cat = catFilter.value;
+            const filtered = menuData.filter(i => 
+                (cat === 'all' || i.cat === cat) && 
+                (i.name.toLowerCase().includes(query))
             );
             renderMenu(filtered);
         }
 
-        function filterCategory() {
-            const val = document.getElementById('categoryFilter').value;
-            if(val === 'all') {
-                renderMenu(menuData);
-            } else {
-                const filtered = menuData.filter(item => item.cat === val);
-                renderMenu(filtered);
-            }
+        function openModal(name, price, img) {
+            document.getElementById('modalName').innerText = name;
+            document.getElementById('modalPrice').innerText = "₹" + price;
+            document.getElementById('modalImg').src = img || 'https://via.placeholder.com/600x450/01241a/d4af37?text=Dezzert+Dudess+Premium';
+            document.getElementById('imageModal').style.display = 'flex';
         }
 
-        // Initial Load
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
         renderMenu(menuData);
     </script>
 </body>
