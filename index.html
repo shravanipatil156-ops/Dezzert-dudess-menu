@@ -103,6 +103,33 @@
             text-align: center; padding: 4rem 1rem; color: var(--gold);
             font-size: 0.8rem; border-top: var(--border-gold); margin-top: 3rem; opacity: 0.8;
         }
+
+        /* --- CUSTOM SCROLLBAR --- */
+/* For Chrome, Safari, and newer versions of Edge */
+::-webkit-scrollbar {
+    width: 8px; /* Slimmer for elegance */
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--emerald-deep); /* Matches your deep background */
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--gold), var(--gold-light));
+    border-radius: 10px;
+    border: 2px solid var(--emerald-deep); /* Creates a "floating" effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-light); /* Brightens on hover */
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) var(--emerald-deep);
+}
     </style>
 </head>
 <body>
@@ -119,16 +146,19 @@
 
     <main class="container" id="menuMain"></main>
 
-    <div id="imageModal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <img id="modalImg" src="" alt="Dessert Item">
-            <div class="modal-info">
-                <h2 id="modalName" style="color: var(--gold-light); font-family: 'Playfair Display'; margin-bottom: 8px;"></h2>
-                <div id="modalPrice" style="font-size: 1.3rem; color: white; font-weight: 600;"></div>
+   <div id="imageModal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        
+        <div id="mediaContainer" style="width: 100%; min-height: 250px; background: #000; display: flex; justify-content: center; align-items: center;">
             </div>
+
+        <div class="modal-info">
+            <h2 id="modalName" style="color: var(--gold-light); font-family: 'Playfair Display'; margin-bottom: 8px;"></h2>
+            <div id="modalPrice" style="font-size: 1.3rem; color: white; font-weight: 600;"></div>
         </div>
     </div>
+</div>
 
     <footer>
         <p>✧ EXQUISITE DESSERT EXPERIENCE ✧</p>
@@ -183,7 +213,7 @@
             { name: "Brownie Devil Crunch", price: 150, cat: "Brownie Thickshakes", img: "" },
             { name: "Brownie Rocher", price: 150, cat: "Brownie Thickshakes", img: "" },
 
-            { name: "Kesar Badam", price: 100, cat: "Dry Fruit Thickshakes", img: "" },
+            { name: "Kesar Badam", price: 100, cat: "Dry Fruit Thickshakes", img: ""C:\Users\Shravani\Pictures\Saved Pictures\WhatsApp Image 2026-01-20 at 00.54.31.jpeg"" },
             { name: "Belgain Cashewnut", price: 100, cat: "Dry Fruit Thickshakes", img: "" },
             { name: "Kaju Rose", price: 150, cat: "Dry Fruit Thickshakes", img: "" },
             { name: "Royal Nuts Heaven", price: 150, cat: "Dry Fruit Thickshakes", img: "" },
@@ -319,12 +349,38 @@
             renderMenu(filtered);
         }
 
-        function openModal(name, price, img) {
-            document.getElementById('modalName').innerText = name;
-            document.getElementById('modalPrice').innerText = "₹" + price;
-            document.getElementById('modalImg').src = img || 'https://via.placeholder.com/600x450/01241a/d4af37?text=Dezzert+Dudess+Premium';
-            document.getElementById('imageModal').style.display = 'flex';
+        function openModal(name, price, mediaUrl) {
+    document.getElementById('modalName').innerText = name;
+    document.getElementById('modalPrice').innerText = "₹" + price;
+    
+    const container = document.getElementById('mediaContainer');
+    container.innerHTML = ''; // Clear previous content
+
+    if (!mediaUrl) {
+        container.innerHTML = `<img src="https://via.placeholder.com/600x450/01241a/d4af37?text=Premium+Selection" style="width:100%">`;
+    } else {
+        const extension = mediaUrl.split('.').pop().toLowerCase();
+
+        if (['mp4', 'webm', 'ogg'].includes(extension)) {
+            // VIDEO
+            container.innerHTML = `<video src="${mediaUrl}" controls autoplay style="width:100%; max-height:400px;"></video>`;
+        } 
+        else if (['mp3', 'wav', 'ogg'].includes(extension)) {
+            // AUDIO
+            container.innerHTML = `
+                <div style="padding: 40px; text-align: center; width: 100%;">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">🎵</div>
+                    <audio src="${mediaUrl}" controls autoplay style="width: 100%;"></audio>
+                </div>`;
+        } 
+        else {
+            // IMAGES & GIFs
+            container.innerHTML = `<img src="${mediaUrl}" style="width:100%; max-height:450px; object-fit: cover;">`;
         }
+    }
+
+    document.getElementById('imageModal').style.display = 'flex';
+}
 
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
